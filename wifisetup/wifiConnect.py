@@ -28,9 +28,24 @@ network={
     psk="WIFI-PSK"
 }"""
 
+peapMschapv2Wifi = """
+
+network={
+    ssid="WIFI-SSID"
+    scan_ssid=1
+    key_mgmt=WPA_EAP
+    eap=PEAP
+    identity="USERNAME"
+    password="USERPASSWORD"
+    phase1="peaplabel=0"
+    phase2="auth=MSCHAPV2"
+}""""
+
 wifiSSID = sys.argv[1]
 wifiPSK = sys.argv[2]
-wifiType = sys.argv[3]
+userName = sys.argv[3]
+userPassword = sys.arg[4]
+wifiType = sys.argv[5]
 
 if wifiSSID != "" and wifiType != "":
 	if wifiPSK == "" or wifiType == "Open (no password)":
@@ -39,6 +54,9 @@ if wifiSSID != "" and wifiType != "":
 		wifiText = wepWifi.replace("WIFI-SSID", wifiSSID).replace("WIFI-PSK", wifiPSK)
 	elif wifiType == "WPA/WPA2":
 		wifiText = wpaWifi.replace("WIFI-SSID", wifiSSID).replace("WIFI-PSK", wifiPSK)
+    elif wifiType == "PEAP/MSCHAPV2":
+        # TODO: Replace password with hashed password
+        wifiText = peapMschapv2Wifi.replace("WIFI-SSID", wifiSSID).replace("WIFI-PSK", wifiPSK).replace("USERNAME", userName).replace("USERPASSWORD", userPassword)
 
 with open("/etc/wpa_supplicant/wpa_supplicant.conf", "a") as wifiFile:
 	wifiFile.write(wifiText)

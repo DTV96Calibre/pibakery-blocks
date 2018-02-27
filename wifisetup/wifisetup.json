@@ -14,8 +14,18 @@
 			"maxLength":0
 		},
 		{
+			"type": "text",
+			"default": "user-name",
+			"maxLength":0
+		},
+		{
+			"type": "text",
+			"default": "user-password",
+			"maxLength":0
+		},
+		{
 			"type": "menu",
-			"options": ["WPA/WPA2", "WEP", "Open (no password)"]
+			"options": ["WPA/WPA2", "WEP", "Open (no password)", "PEAP/MSCHAPV2"]
 		}
 	],
 	"network": false,
